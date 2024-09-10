@@ -1,0 +1,1 @@
+web: gunicorn beautymarksalon.wsgi

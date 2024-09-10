@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/services/index.css' %}"/>
+{% endblock %} 
+{% block content %}
+
+<section>
+  <h1>Our Services</h1>
+</section>
+
+<section class="card-container">
+  {% for service in services %}
+    <div class="card">
+      <a href="/services/{{service.id}}">
+        <div class="card-content">
+          <div class="card-img-container">
+            <img src="{% static service.image %}" alt="{{ service.name }}">
+          </div>
+          <h2 class="card-title">{{ service.type }}</h2>
+          <p> {{ service.cost }}</p>
+          <p><small>{{ service.description }}</small></p>
+          <h2> <a href="/appointments/{{user.id}}">Book Now!</a></h2>
+          <input type="date"/>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</section>
+<footer>
+</footer>
+
+{% endblock %}

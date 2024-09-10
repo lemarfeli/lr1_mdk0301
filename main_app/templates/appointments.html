@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/appointment-detail.css' %}" />
+<div class="appointment-container">
+  <section class="appointments">
+      <div class="subsection-title">
+          <h2>Appointments</h2>
+      </div>
+      <h3>Book an Appointment</h3>
+      <form action="{% url 'add-appointment' user.id %}" method="post" class="subsection-content" autocomplete="off">
+          {% csrf_token %}
+          {{ appointment_form.as_p }}
+          <button type="submit" class="btn submit">Book Appointment</button>
+      </form>
+      {% if user.appointment_set.all.count %}
+      <table>
+          <thead>
+              <tr>
+                  <th>Date</th>
+                  <th>Service</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for appointment in user.appointment_set.all %}
+              <tr>
+                  <td>{{appointment.date}}</td>
+                  <td>{{appointment.get_service_display}}</td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      {% else %}
+      <div class="subsection-content">
+          <p>⚠️ {{user.name}} You haven't booked yet!</p>
+      </div>
+      {% endif %}
+  </section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<link rel="stylesheet" href="{% static 'css/services/detail.css' %}" />
+{% endblock %} {% block content %}
+
+<section class="service-container">
+  <div class="service-img">
+    <img src="{% static service.image %}" alt="{{ service.name }}" />
+  </div>
+  <div>
+    <h1 class="service-details">{{ service.type }}</h1>
+    <h2 class="service-details">{{ service.description }}</h2>
+    <ul>
+      <p>{{ service.stylists }}</p>
+    </ul>
+  </div>
+</section>
+
+{% endblock %}

@@ -27,6 +27,7 @@ def find_service_by_id(id):
     return None
 
 # SERVICES
+# отображение списка услуг и деталей конкретной услуги
 def service_index(request):
     return render(request, 'services/index.html', {'services': services})
 
@@ -34,6 +35,7 @@ def service_detail(request, service_id):
     service = find_service_by_id(service_id)
     return render(request, 'services/detail.html', {'service': service})
 
+# модель для описания услуги
 class Service:
     def __init__(self, type, description, cost, image, id):
         self.type = type
@@ -74,14 +76,17 @@ def about(request):
 #     my_appointments = request.user.appointment_set.all()
 #     return render(request, 'myappointments.html', { 'myappointments': my_appointments })
 
+# класс для создания записи, требующий авторизации
 class AppointmentCreate(LoginRequiredMixin, CreateView):
     model = Appointment
     fields = ['service', 'stylist', 'date', 'time']
 
+    # добавление пользователя, создавшего запись
     def form_valid(self, form):
         form.instance.user = self.request.user  
         return super().form_valid(form)
-    
+
+# функция для создания записи
 @login_required    
 def add_appointment(request, user_id):
     form = AppointmentForm(request.POST)
@@ -92,17 +97,20 @@ def add_appointment(request, user_id):
     return redirect('appointments.html')
 
 
-
+# класс для обновления записи, требующий авторизации
 class AppointmentUpdate(LoginRequiredMixin, UpdateView):
     model = Appointment
     fields = ['service', 'stylist', 'date', 'time']
 
+# класс для удаления записи, требующий авторизации
 class AppointmentDelete(LoginRequiredMixin, DeleteView):
     model = Appointment
     success_url = '/appointments'
 
+# функция для регистрации нового пользователя
 def signup(request):
     error_message = ''
+    # В случае успешной регистрации пользователь автоматически входит в систему
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():

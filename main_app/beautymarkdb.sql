@@ -1,3 +1,4 @@
+# создание БД и добавление данных
 
 CREATE TABLE services ( 
     id SERIAL PRIMARY KEY,
